@@ -7,3 +7,17 @@ services:
         ports:
             - 8080:8080
         restart: always
+        networks:
+            - network1
+    proxy:
+        build: ./mitm
+        volumes:
+            - ./storage/registry:/opt/storage
+        ports:
+            - 7080:8080
+        restart: always
+        networks:
+            - network1
+networks:
+    network1:
+        driver: bridge

@@ -7,11 +7,13 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
 RUN dpkg --add-architecture i386 && \
-    apt-get update && apt-get -y install python2 python-is-python2 xvfb x11vnc xdotool wget tar supervisor net-tools fluxbox gnupg2 npm
-
+    apt-get update && apt-get -y install python2 python-is-python2 xvfb x11vnc xdotool wget tar supervisor net-tools fluxbox gnupg2 npm sudo
 
 RUN chmod -R a+rwX  /usr/local/;
 RUN chmod -R a+rwX  /root;
+
+ADD main.js /opt/main.js
+RUN chmod -R a+rwX  /opt/main.js;
 
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -45,10 +47,15 @@ ARG GROUPS=$GNAME
 
 RUN groupadd -g $GID $GNAME \
 && useradd --create-home -d /home/$UNAME -g $GID -u $UID $UNAME \
-&& usermod -a -G $GROUPS $UNAME
+&& usermod -a -G $GROUPS $UNAME 
+
 
 RUN  groupadd supervisor \
-	 && usermod -a -G supervisor $UNAME
+	 && usermod -a -G supervisor $UNAME \
+	 && usermod -a -G sudo $UNAME
+
+RUN adduser $UNAME sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN chmod -R a+rwX  /usr/local/;
 RUN chmod -R a+rwX  /root;
@@ -63,9 +70,15 @@ RUN wget -O - https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar -xzv -C
 ENV HOME /home/$UNAME
 
 RUN cd /opt; \
-	npm install -g electron electron-open-url --unsafe-perm=true --allow-root;
+	npm install -g electron electron-open-url --unsafe-perm=true --allow-root; \
+	npm install nightmare; \
+	npm install jquery; \
+	echo Qwerty12345@ | sudo anydesk --set-password
 
 USER root
+
+RUN apt-get install -y libgconf-2-4 libgtk-3-0 libnss3-dev libgdk-pixbuf2.0-dev libgtk-3-dev libxss-dev libasound2;
+
 ENV HOME /root
 
 EXPOSE 8080
