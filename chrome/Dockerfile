@@ -21,5 +21,7 @@ COPY startVNC.sh /home/user/
 RUN sudo chown user: /home/user/startVNC.sh && \
     chmod +x /home/user/startVNC.sh
 
+ADD supervisord.conf /etc/supervisord.conf
+
 EXPOSE 8080
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
