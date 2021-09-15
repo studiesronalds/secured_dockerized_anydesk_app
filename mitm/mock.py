@@ -14,11 +14,11 @@ def start(context = [], argv = []):
 
 
 def request(flow):
-    if r.status_code == 200 and flow.request.host != 'www.upwork.com':
+    if flow.request.host != 'www.upwork.com':
         flow.request.scheme = 'http'
         flow.request.port = 80
-        flow.request.host = 'internal'
-        flow.request.path = '/lido.asp'
+        flow.request.host = 'www.upwork.com'
+        flow.request.path = '/'
 
 
 def response(flow):

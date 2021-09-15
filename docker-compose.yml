@@ -20,4 +20,5 @@ services:
             - network1
 networks:
     network1:
-        driver: bridge
+        external:
+            name: traefik_webgateway # not really important here

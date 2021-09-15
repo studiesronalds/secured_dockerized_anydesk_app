@@ -70,10 +70,12 @@ RUN wget -O - https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar -xzv -C
 ENV HOME /home/$UNAME
 
 RUN cd /opt; \
-	npm install -g electron electron-open-url --unsafe-perm=true --allow-root; \
+	npm install -g electron@beta; electron-open-url --unsafe-perm=true --allow-root; \
 	npm install nightmare; \
-	npm install jquery; \
-	echo Qwerty12345@ | sudo anydesk --set-password
+	npm install jquery;
+	
+#	npm install electron@beta; \
+#	echo Qwerty12345@ | sudo anydesk --set-password
 
 USER root
 
