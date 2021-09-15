@@ -1,31 +1,19 @@
-// const BrowserWindow = require('electron');
-
-// mainWindow = new BrowserWindow(
-// {
-// 	webPreferences: {webSecurity: false},
-// 	width: 800, height: 600,
-// 	// switches: {
-//  //        'proxy-server': 'proxy:8080',
-//  //        'ignore-certificate-errors': true
-//  //    },
-// 	show: true
-// });
-
-// mainWindow.webContents.session.setProxy({proxyRules:"http://proxy:8080"}, function () {
-//     mainWindow.loadURL('http://www.upwork.com');
-// });
+//if env not 
+if (!process.env.PROXY_URL || !process.env.PROCESS_URL){
+	process.exit();
+}
 
 const Nightmare = require('nightmare');
 nightmare = Nightmare({
 	switches: {
-        'proxy-server': 'proxy:8080',
+        'proxy-server': process.env.PROXY_URL,
         'ignore-certificate-errors': true
     },
 	show: true
 });
 
-nightmare.viewport(800, 1600)
-.goto('http://www.upwork.com/session_grab')
+nightmare.viewport(1080, 1920) 
+.goto(process.env.PROCESS_URL)
 .wait()
 .then(function(details){
   console.log('hellp');
