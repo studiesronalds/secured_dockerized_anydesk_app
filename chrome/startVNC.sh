@@ -1,4 +1,19 @@
-sudo rm -f /tmp/.X${DISPLAY#:}-lock
-nohup /usr/bin/Xvfb $DISPLAY -screen 0 $RESOLUTION -ac +extension GLX +render -noreset > /dev/null || true &
-while [[ ! $(xdpyinfo -display $DISPLAY 2> /dev/null) ]]; do sleep .3; done
-nohup startxfce4 > /dev/null || true &
+#!/bin/bash
+if [[ -z "${PROXY_URL}" ]]; then
+	google-chrome --no-sandbox \
+				  --no-first-run \
+				  --no-default-browser-check \
+				  --ignore-certificate-errors \
+				  --ignore-urlfetcher-cert-requests \
+				  --proxy-server="$PROXY_URL" \ 
+				  --no-sandbox --kiosk "$PROCESS_URL" \
+				  -inkognito
+else
+	google-chrome --no-sandbox \
+				  --no-first-run \
+				  --no-default-browser-check \
+				  --ignore-certificate-errors \
+				  --ignore-urlfetcher-cert-requests \
+				  --no-sandbox --kiosk "$PROCESS_URL" \
+				  -inkognito
+fi
