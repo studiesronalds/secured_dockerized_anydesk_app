@@ -23,7 +23,7 @@ services:
         restart: always
         networks:
             - public_net
-            - private_net
+#            - private_net
     chrome:
         build: ./chrome
         ports:
@@ -32,7 +32,7 @@ services:
             - PROCESS_URL=http://upwork.com
             - PROXY_URL=proxy:8080
         networks:
-            - private_net
+#            - private_net
             - public_net #temp 
 networks:
     public_net:    

@@ -15,10 +15,11 @@ def start(context = [], argv = []):
 
 def request(flow):
     if flow.request.host != 'www.upwork.com':
-        flow.request.scheme = 'http'
-        flow.request.port = 80
-        flow.request.host = 'www.upwork.com'
-        flow.request.path = '/'
+        print(flow.request.host)
+#        flow.request.scheme = 'http'
+#        flow.request.port = 80
+#        flow.request.host = 'www.upwork.com'
+#        flow.request.path = '/'
 
 
 def response(flow):
