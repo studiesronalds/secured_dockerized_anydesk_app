@@ -8,8 +8,9 @@ services:
             - 8080:8080
         restart: always
         environment:
-            - PROXY_URL=proxy:8080
-            - PROCESS_URL=http://chrome:8080
+#            - PROXY_URL=proxy:8080
+#            - PROCESS_URL=http://chrome:8080
+            - PROCESS_URL=http://ss.lv
         networks:
             - public_net
     proxy:
