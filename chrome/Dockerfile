@@ -1,25 +1,15 @@
-FROM alpine
+FROM 172.26.3.78:5000/anydesk_novnc:v1.1
 
-LABEL maintainer="Naveen S R <srnaveen2k@yahoo.com>"
+LABEL maintainer="Kur Flamingo <i@k.docker>"
 
-ENV DISPLAY :52
-ENV RESOLUTION 1920x1080x24
-
-RUN apk add sudo bash supervisor xfce4 xvfb xdpyinfo lightdm-gtk-greeter x11vnc xfce4-terminal chromium python3 git openssl && \
-    ln -s /usr/bin/python3 /usr/bin/python && \
-    echo 'CHROMIUM_FLAGS="--chrome-frame --kiosk http://upwork.com --disable-gpu --disable-software-rasterizer --disable-dev-shm-usage --no-sandbox"' >> /etc/chromium/chromium.conf && \
-    dbus-uuidgen > /var/lib/dbus/machine-id
-
-RUN adduser -h /home/user -s /bin/bash -S -D user && echo "user:passwd" | chpasswd && \
-    echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER user
-WORKDIR /home/user
-
-RUN wget -O - https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar -xzv -C /tmp/ && mv /tmp/noVNC-1.1.0 /home/user/noVNC/ && ln -s /home/user/noVNC/vnc_lite.html /home/user/noVNC/index.html && \
-    wget -O - https://github.com/novnc/websockify/archive/v0.9.0.tar.gz | tar -xzv -C /tmp/ && mv /tmp/websockify-0.9.0 /home/user/noVNC/utils/websockify
-COPY startVNC.sh /home/user/
-RUN sudo chown user: /home/user/startVNC.sh && \
-    chmod +x /home/user/startVNC.sh
+# --proxy-server="https://proxy-ip:proxy-port"
+# google-chrome --no-sandbox --kiosk http://192.168.1.175:1188/ -inkognito
+RUN apt-get install -y snapd; \
+    apt-get install -y libappindicator1 fonts-liberation; \
+    apt-get -y install dbus-x11 xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable; \
+    apt-get -y install libxss1 lsb-release xdg-utils; \
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb /tmp/ ; \
+    dpkg -i google-chrome-stable_current_amd64.deb;
 
 ADD supervisord.conf /etc/supervisord.conf
 

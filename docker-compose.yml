@@ -1,16 +1,17 @@
 version: '2'
 services:
     novnc:
-        build: ./novnc
+#        build: ./novnc
+        image: 172.26.3.78:5000/anydesk_novnc:v1.1
         volumes:
             - ./storage/registry:/opt/storage
         ports:
-            - 8080:8080
+            - 8050:8080
         restart: always
         environment:
 #            - PROXY_URL=proxy:8080
-#            - PROCESS_URL=http://chrome:8080
-            - PROCESS_URL=http://ss.lv
+            - PROCESS_URL=http://chrome:8080
+#            - PROCESS_URL=http://ss.lv
         networks:
             - public_net
     proxy:
@@ -32,6 +33,7 @@ services:
             - PROXY_URL=proxy:8080
         networks:
             - private_net
+            - public_net #temp 
 networks:
     public_net:    
     private_net:
