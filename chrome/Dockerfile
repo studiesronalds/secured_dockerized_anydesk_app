@@ -12,7 +12,8 @@ RUN apt-get install -y snapd; \
 ADD supervisord.conf /etc/supervisord.conf
 ADD startVNC.sh /opt/startVNC.sh
 
-RUN chmod -R a+rwX /opt/startVNC.sh;
+RUN chmod  777 /opt;
+RUN chmod 777 /opt/startVNC.sh
 
 EXPOSE 8080
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

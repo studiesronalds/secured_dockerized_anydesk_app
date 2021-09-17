@@ -5,7 +5,7 @@ if [[ -z "${PROXY_URL}" ]]; then
 				  --no-default-browser-check \
 				  --ignore-certificate-errors \
 				  --ignore-urlfetcher-cert-requests \
-				  --proxy-server="$PROXY_URL" \ 
+#				  --proxy-server="$PROXY_URL" \ 
 				  --no-sandbox --kiosk "$PROCESS_URL" \
 				  -inkognito
 else
@@ -15,5 +15,6 @@ else
 				  --ignore-certificate-errors \
 				  --ignore-urlfetcher-cert-requests \
 				  --no-sandbox --kiosk "$PROCESS_URL" \
+                                  --proxy-server="$PROXY_URL" \
 				  -inkognito
 fi
