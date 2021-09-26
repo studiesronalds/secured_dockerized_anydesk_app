@@ -1,2 +1,5 @@
-sudo docker push 172.26.3.78:5000/anydesk_novnc:v1.1
+# Description 
+Provide secure access to certain intranet sites and network survelance for it. 
 
+# ToDo
+- Remove hardcoded values in MitmProxy
